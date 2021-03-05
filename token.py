@@ -82,6 +82,23 @@ def fetch_new_token():
         print(new_resp_pretty_json)
     return new_resp_load_json
 
+def copy_fetch_new_token():
+    print('process 1 - Fetch new token from AWS')
+    session = boto3.session.Session(
+        profile_name='encounter-users')
+    client = session.client('sts')
+    new_credentials_resp = client.assume_role(
+        RoleArn=ROLE_ARN,
+        RoleSessionName='AWSCLI-Session',
+        DurationSeconds=43200,
+        SerialNumber=MFA_SERIAL,
+        TokenCode=MFA_OTP
+    )
+    new_resp_pretty_json = json.dumps(new_credentials_resp, indent=4, sort_keys=True, default=str)
+    new_resp_load_json = json.loads(new_resp_pretty_json)
+    if IS_DEBUG_MODE.upper() == 'Y':
+        print(new_resp_pretty_json)
+    return new_resp_load_json
 
 newAwsResponse = fetch_new_token()
 
