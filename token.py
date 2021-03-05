@@ -56,6 +56,8 @@ check_debug_mode()
 def take_backup_old_file():
     shutil.copyfile(CREDENTIAL_FILE_PATH, CREDENTIAL_FILE_PATH + '-bkp')
 
+def copy_take_backup_old_file():
+    shutil.copyfile(CREDENTIAL_FILE_PATH, CREDENTIAL_FILE_PATH + '-bkp')
 
 if IS_DEBUG_MODE.upper() == 'Y':
     take_backup_old_file()
